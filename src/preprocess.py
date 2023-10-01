@@ -62,4 +62,3 @@ def preprocess_num_data_pca(data_frame: pd.DataFrame, num_attrs: Tuple):
     data_num_attr_pca = pca_fit.transform(data_frame[list(num_attrs)])
 
     return data_num_attr_pca
-

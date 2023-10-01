@@ -24,4 +24,3 @@ SYMBOLING = ("symboling",)
 MODELS = {
          'LinearRegression': LinearRegression()
          }
-

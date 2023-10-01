@@ -7,4 +7,3 @@ def load_data():
     """Load auto data."""
     data_frame = pd.read_csv(FILE_PATHNAME)
     return data_frame
-
