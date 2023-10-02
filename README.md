@@ -1,5 +1,5 @@
 <div align="center">
-   <img src=https://github.com/vladimirkanchev/auto-price/assets/4309523/c5f22df4-92ae-4080-86a4-a9fb0251f71f width="800" height="500">
+  <img src="/![alt text]![alt text]![alt text]![alt text]![alt text]![alt text]_media/car_shapes.png" width="800" height="500">
 </div>
  
 # ML App for Car Price Calculation
@@ -8,7 +8,7 @@ A toy AI project that predicts a car price using an AI model trained on a [publi
 Besides AI algorithms we apply statistic component analysis to determine precisely  price of the car the user wants to see.
 
 <div align="center">
-  <img src=https://github.com/vladimirkanchev/auto-price/assets/4309523/ef70ee52-6347-47b4-94b5-e29fd57020ed width="700" height="800">
+  <img src="/_media/gui_test_car_attributes.png" width="700" height="800">
 </div>
 
 ### Installation and Setup
