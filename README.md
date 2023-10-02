@@ -3,9 +3,9 @@
 </div>
  
 # ML App for Car Price Calculation
-A toy AI project that predicts a car price using an AI model trained on a [public automobile dataset](https://www.kaggle.com/datasets/toramky/automobile-dataset/). The idea is people who wants to buy a car of a certain brand to select some of its parameters and to see how much money will cost him/her. The App is deployed in the cloud and everyone can use it as a preliminary market research tool. 
+A toy AI project that predicts a car price using an AI model trained on a [public automobile dataset](https://www.kaggle.com/datasets/toramky/automobile-dataset/). The idea is people who want to buy a car of a certain brand to select some of its parameters and to see how much money will cost them. The App is deployed in the cloud and everyone can use it as a preliminary market research tool. 
 
-Besides AI algorithms we apply statistic component analysis to determine precisely  price of the car the user wants to see.
+Besides AI algorithms we apply statistic component analysis to determine precisely the price of the car the user wants to see.
 
 <div align="center">
   <img src="/_media/gui_test_car_attributes.png" width="700" height="800">
@@ -30,20 +30,26 @@ Besides AI algorithms we apply statistic component analysis to determine precise
    
     
 ### Data
-    While at the current moment we use only the above mentioned public car dataset, we plan to use larger car datasets in the future. Appreciate all suggestions for other publicly availably car datasets. 
+    While at the current moment we use only the above mentioned public car dataset, we plan to use larger car datasets in the future. We appreciate all suggestions for other publicly availably car datasets. 
     
 ### Code Structure
+   Currently our project has the following structure:
+  <div align="center">
+    <img src="/_media/project_tree.png" width="200" height="400">  
+  </div>
+
 
 ### Results and Evaluations
-    At the current moment we have only Linear Regression prediction algorithm. Need a solid benchmark car dataset for  evaluation.
+    At the current moment we have implemented only Linear Regression prediction algorithm. We are aware we need a solid benchmark car dataset for  evaluation.
     
 ### Future Work
     * Add better regression algorithms as Gradient Boosting, etc.
     * Improve component analysis algorithms
     * Speed up the ML algorithms and decrease memory requirements.
-    * Implement  simple CI/CD workflow and MLOPS
+    * Implement a simple CI/CD workflow and MLOPS
     
 ### Who wants to contribute
+    Contributions, issues and feature requests will be welcomed at the later stage of project development. 
 
 ### References
 
