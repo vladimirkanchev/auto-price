@@ -1,8 +1,11 @@
 """'Helper functions for auto car prediction."""
+import pickle
 from typing import Tuple
 
 import numpy as np
 import pandas as pd
+
+import config
 
 
 def replace_missing(data_frame: pd.DataFrame):
@@ -45,3 +48,17 @@ def convert_cat_ord_to_num(data_frame: pd.DataFrame):
     data_frame['price'] = data_frame['price'].dropna().astype(int)
 
     return data_frame
+
+
+def save_model(model: object):
+    """Save car price predicted model."""
+    with open(config.MODEL_PATHNAME, 'wb') as file:
+        pickle.dump(model, file)
+
+
+def load_model():
+    """Load car price predicted model."""
+    with open(config.MODEL_PATHNAME, 'rb') as file:
+        model = pickle.load(file)
+
+    return model

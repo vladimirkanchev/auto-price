@@ -14,8 +14,6 @@ import utils
 def preprocess_impute(data_frame: pd.DataFrame):
     """Find out and impute missing values in the loaded auto data."""
     data_frame = utils.replace_missing(data_frame)
-    
-
     data_frame = utils.mean_imputation(data_frame, config.NUM_ATTR)
     data_frame = utils.mode_imputation(data_frame, config.CAT_ATTR)
     data_frame = utils.zero_imputation(data_frame, config.CAT_ORD_ATTR)
@@ -35,9 +33,8 @@ def preprocess_transform(data_frame: pd.DataFrame, transform: Tuple = 'None'):
     num_attr = list(itertools.chain(config.NUM_ATTR, config.CAT_ORD_ATTR))
     num_attr.remove('price')
     num_attr_new = tuple(num_attr)
- 
-    cat_data_tr = preprocess_cat_data_mca(data_frame, cat_attr_new)
 
+    cat_data_tr = preprocess_cat_data_mca(data_frame, cat_attr_new)
     num_data_tr = preprocess_num_data_pca(data_frame, num_attr_new)
     num_data_tr = data_frame[list(num_attr_new)]
     data_tr_lst = [num_data_tr, cat_data_tr]
@@ -63,7 +60,6 @@ def preprocess_num_data_pca(data_frame: pd.DataFrame, num_attrs: Tuple):
     # get princical components
     pca_fit = pca.fit(data_frame[list(num_attrs)])
     # pca_fit.eigenvalues_summary
-
     data_num_attr_pca = pca_fit.transform(data_frame[list(num_attrs)])
 
     return data_num_attr_pca

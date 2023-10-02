@@ -9,7 +9,9 @@ PCA_COMP = 15
 # PCA_VIS_COMP = 2
 
 PROJECT_PATHNAME = Path(__file__).resolve().parent.parent
-FILE_PATHNAME = PROJECT_PATHNAME / 'data/Automobile_data.csv'
+DATA_PATHNAME = PROJECT_PATHNAME / 'data/Automobile_data.csv'
+MODEL_PATHNAME = PROJECT_PATHNAME / 'models/auto_price_predict.pkl'
+
 
 CAT_ATTR = ("make", "fuel-type", "aspiration", "num-of-doors", "body-style",
             "drive-wheels", "engine-location", "engine-type",
