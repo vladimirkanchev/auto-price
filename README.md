@@ -30,6 +30,7 @@ Besides AI algorithms we apply statistic component analysis to determine precise
 
 ### Results and Evaluations
     At the current moment we have only Linear Regression prediction algorithm. Need a solid benchmark car dataset for  evaluation.
+    
 ### Future Work
     * Add better regression algorithms as Gradient Boosting, etc.
     * Improve component analysis algorithms
