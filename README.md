@@ -1,9 +1,15 @@
- ![9d6d575b67c9cd7de24a633091ac8010](https://github.com/vladimirkanchev/auto-price/assets/4309523/c5f22df4-92ae-4080-86a4-a9fb0251f71f=100x100)
-
+<div align="center">
+   <img src=https://github.com/vladimirkanchev/auto-price/assets/4309523/c5f22df4-92ae-4080-86a4-a9fb0251f71f width="800" height="500">
+</div>
+ 
 # ML App for Car Price Calculation
 A toy AI project that predicts a car price using an AI model trained on a [public automobile dataset](https://www.kaggle.com/datasets/toramky/automobile-dataset/). The idea is people who wants to buy a car of a certain brand to select some of its parameters and to see how much money will cost him/her. The App is deployed in the cloud and everyone can use it as a preliminary market research tool. 
 
 Besides AI algorithms we apply statistic component analysis to determine precisely  price of the car the user wants to see.
+
+<div align="center">
+  <img src=https://github.com/vladimirkanchev/auto-price/assets/4309523/ef70ee52-6347-47b4-94b5-e29fd57020ed width="700" height="800">
+</div>
 
 ### Installation and Setup
 
