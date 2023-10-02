@@ -11,9 +11,23 @@ Besides AI algorithms we apply statistic component analysis to determine precise
   <img src="/_media/gui_test_car_attributes.png" width="700" height="800">
 </div>
 
-### Installation and Setup
+### Installation, Setup and 
+
+To run the project in your local system, you need to install the project first:
+
+`git clone https://github.com/vladimirkanchev/auto-price`
+
+`cd auto-price`
+
+`pip install -r requirements.txt`
+
+Then you can run the App locally:
+
+`streamlit run src/main`
+
 
 ### Technologies
+
     At the current moment we use the following software technologies:
     * Visual Studio Code 1.82.2
     * Python 3.10.12
@@ -21,6 +35,7 @@ Besides AI algorithms we apply statistic component analysis to determine precise
     * Streamlit Community cloud
     
 ### Python Packages Used
+
     Some of the python packages which are part of our project:
     * Numpy 1.23.5
     * Pandas 2.0.1
@@ -30,13 +45,14 @@ Besides AI algorithms we apply statistic component analysis to determine precise
    
     
 ### Data
+    
     While at the current moment we use only the above mentioned public car dataset, we plan to use larger car datasets in the future. We appreciate all suggestions for other publicly availably car datasets. 
     
 ### Code Structure
+   
    Currently our project has the following structure:
-  <div align="left">
-    <img src="/_media/project_tree.png" width="400" height="500">  
-  </div>
+   
+   <img src="/_media/project_tree.png" width="400" height="500">  
 
 
 ### Results and Evaluations
@@ -53,3 +69,4 @@ Besides AI algorithms we apply statistic component analysis to determine precise
 
 ### References
 
+https://github.com/vladimirkanchev/auto-pricehttps://github.com/vladimirkanchev/auto-price
