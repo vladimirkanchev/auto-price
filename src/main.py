@@ -1,15 +1,14 @@
 """Main function to start auto prediction algorithm."""
-from sklearn.model_selection import train_test_split
+import pandas as pd
 import streamlit as st
 
 import config
 from data_setup import load_data
 from preprocess import preprocess_impute, preprocess_transform
-from utils import load_model, save_model
-from model import train_model, evaluate_model
+from model import train_model, inference_model
 
 
-def toy_example():
+def load_data_frame():
     """First toy example of auto prediction algorithm."""
     data_frame = load_data()
     data_frame = preprocess_impute(data_frame)
@@ -17,22 +16,14 @@ def toy_example():
     data_frame.head(5)
     target = data_frame['price']
     data_frame = data_frame.drop('price', axis=1)
-    data_frame_tr = preprocess_transform(data_frame, transform=('pca', 'mca'))
-    x_train, x_val, y_train, y_val = train_test_split(data_frame_tr,
-                                                      target,
-                                                      test_size=0.2,
-                                                      random_state=42)
 
-    trained_models = train_model(x_train, y_train, config.MODELS)
-    result = evaluate_model(x_val, y_val, trained_models)
-    print(result)
-    save_model(trained_models['LinearRegression'])
+    return data_frame, target
 
 
 def main():
     """Start auto prediction algorithm."""
-    toy_example()
-    st.title("Car Prediction Price App through ML:")
+    data_frame, target = load_data_frame()
+    st.title("ML App for Car Prediction Price:")
     st.text("Enter parameters of the car:")
 
     left_column, right_column = st.columns(2)
@@ -93,10 +84,31 @@ def main():
                                         'spdi')
             )
         st.write('You selected:', fuel_system)
+    test_car = {'make': make, 'fuel-type': [fuel_type],
+                'aspiration': [aspiration],
+                'num-of-doors': [num_of_doors],
+                'body-style': [body_style],
+                'drive-wheels': [drive_wheels],
+                'engine-location': [engine_location],
+                'engine-type': [engine_type],
+                'num-of-cylinders': [num_of_cylinders],
+                'fuel-system': [fuel_system]
+                }
 
+    test_data_frame = pd.DataFrame.from_dict(test_car)
+
+    x_train, x_test = preprocess_transform(data_frame, test_data_frame,
+                                           transform=('mca', )
+                                           )
+    y_train = target
+    trained_models = train_model(x_train, y_train, config.MODELS)
+
+    result = inference_model(x_test, trained_models)
+    price = round(result['Predicts'][0][0], 2)
     submit = st.button("Compute", type="primary")
+
     if submit:
-        st.write('Market car price is: ' + '1000' + ' dollars')
+        st.write('Market car price is: ' + str(price) + ' dollars')
 
 
 if __name__ == "__main__":

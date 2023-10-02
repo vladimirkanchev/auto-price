@@ -39,3 +39,18 @@ def evaluate_model(x_val: pd.DataFrame, y_val: pd.DataFrame,
               'R2': r_2}
 
     return result
+
+
+def inference_model(x_val: pd.DataFrame, trained_models: Dict):
+    """Evaluate the trained regression model with set-aside evaluation data."""
+    model_name, predicts = [], []
+
+    for name, trained_model in trained_models.items():
+        predict = trained_model.predict(x_val.values.reshape(-1, 11))
+        model_name.append(name)
+        predicts.append(predict)
+
+    result = {'Model': model_name,
+              'Predicts': predicts}
+
+    return result
