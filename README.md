@@ -34,8 +34,8 @@ Besides AI algorithms we apply statistic component analysis to determine precise
     
 ### Code Structure
    Currently our project has the following structure:
-  <div align="center">
-    <img src="/_media/project_tree.png" width="200" height="400">  
+  <div align="left">
+    <img src="/_media/project_tree.png" width="400" height="500">  
   </div>
 
 
