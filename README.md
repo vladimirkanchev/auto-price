@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="/![alt text]![alt text]![alt text]![alt text]![alt text]![alt text]_media/car_shapes.png" width="800" height="500">
+  <img src="/_media/car_shapes.png" width="800" height="500">
 </div>
  
 # ML App for Car Price Calculation
