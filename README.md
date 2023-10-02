@@ -1,2 +1,2 @@
 # auto-price
-A toy AI project that predicts a car price using an AI model trained on a public automobile dataset.
+A toy AI project that predicts a car price using an AI model trained on a public automobile dataset [1](https://www.kaggle.com/datasets/toramky/automobile-dataset/). The idea is people who wants to buy a car of a certain brand to select its parameters to define some car parameters and how much many will cost. The App can serve for a preliminary market research. To calculate the car price we use component analysis on car attributes from the dataset.
