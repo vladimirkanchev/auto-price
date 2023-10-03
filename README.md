@@ -3,7 +3,7 @@
 </div>
  
 # ML App for Car Price Calculation
-This repo contains a toy AI project that predicts a car price using an AI model trained on a [public automobile dataset](https://www.kaggle.com/datasets/toramky/automobile-dataset/). Our idea is people who want to buy a car of a certain brand to select some of its parameters and to see how much money will cost them. The App is deployed in the cloud and everyone can use it as a preliminary market research tool. 
+This repo contains a toy AI project that predicts a car price using an AI model trained on a [public automobile dataset](https://www.kaggle.com/datasets/toramky/automobile-dataset/). Our idea is people within a company (marketing department for example) who want to check market price of a car of certain brand and properties to define some of its parameters and to see how much money will cost. The App is deployed in the cloud and can be used it as a preliminary market research tool. 
 
 Besides AI algorithms we apply statistic component analysis to determine precisely the price of the car the user wants to see. At the current moment we have developed only MCA algorithm on the car categorical attributes, which are selected from the user through App frontend:
 
