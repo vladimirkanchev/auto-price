@@ -29,7 +29,12 @@ def main():
     left_column, right_column = st.columns(2)
     with left_column:
         make = st.selectbox(
-            'Car Brand:', ('audi', 'bmw', 'honda')
+            'Car Brand:', ('audi', 'bmw', 'honda',
+                           'chevrolet', 'dodge',
+                           'isuzu', 'mazda', 'jaguar',
+                           'mercedes-benz', 'mitsubishi'
+                           'peugot', 'nissan', 'saab',
+                           'toyota', 'volkswagen', 'volvo')
             )
         st.write('You selected:', make)
 
