@@ -24,7 +24,7 @@ def main():
     """Start auto prediction algorithm."""
     data_frame, target = load_data_frame()
     st.title("ML App for Car Prediction Price:")
-    st.text("Enter parameters of the car:")
+    st.text("Enter the parameters of the car:")
 
     left_column, right_column = st.columns(2)
     with left_column:
