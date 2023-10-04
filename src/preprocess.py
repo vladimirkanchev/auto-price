@@ -32,10 +32,13 @@ def preprocess_transform(train_data_frame: pd.DataFrame,
                          transform: Tuple = 'None') \
         -> Tuple[pd.DataFrame, pd.Series]:
     """Apply PCA and MCA on numerical and categorical data respectively."""
-    if transform is None:
-        return train_data_frame
+    if transform is not None \
+            and 'mca' not in transform \
+            and 'pca' not in transform:
+        raise ValueError("Transform must of type mca, pca, or both")
 
-    cat_data_tr = pd.DataFrame()
+    if transform is None:
+        return train_data_frame, test_data_frame
 
     if 'mca' in transform:
         cat_attr_new = tuple(itertools.chain(config.CAT_ATTR,
@@ -43,15 +46,26 @@ def preprocess_transform(train_data_frame: pd.DataFrame,
         cat_data_tr = preprocess_cat_data_mca(train_data_frame,
                                               test_data_frame,
                                               cat_attr_new)
+        if len(transform) == 1:
+            train_data_tr = cat_data_tr.iloc[:-1]
+            test_data_tr = cat_data_tr.iloc[-1]
+            return train_data_tr, test_data_tr
 
     if 'pca' in transform:
         num_attr_list = list(itertools.chain(config.NUM_ATTR,
                                              config.CAT_ORD_ATTR))
         num_attr = tuple(num_attr_list.remove('price'))
-        # num_data_tr = preprocess_num_data_pca(data_frame, num_attr_new)
+        num_data_tr = preprocess_num_data_pca(train_data_frame,
+                                              test_data_frame,
+                                              num_attr)
+        if len(transform) == 1:
+            train_data_tr = num_data_tr.iloc[:-1]
+            test_data_tr = num_data_tr.iloc[-1]
+            return train_data_tr, test_data_tr
 
-    train_data_tr = cat_data_tr.iloc[:-1]
-    test_data_tr = cat_data_tr.iloc[-1]
+    data_tr = pd.concat([cat_data_tr, num_data_tr], axis=1)
+    train_data_tr = data_tr.iloc[:-1]
+    test_data_tr = data_tr.iloc[-1]
     # data_tr = pd.concat(data_tr_lst, ignore_index=True, axis=1)
 
     return train_data_tr, test_data_tr
@@ -74,14 +88,18 @@ def preprocess_cat_data_mca(train_data_frame: pd.DataFrame,
     return data_cat_attr_mca
 
 
-def preprocess_num_data_pca(data_frame: pd.DataFrame,
+def preprocess_num_data_pca(train_data_frame: pd.DataFrame,
+                            test_data_frame: pd.DataFrame,
                             num_attrs: Tuple) \
         -> pd.DataFrame:
     """Apply PCA "on numerical attributes to use for auto price prediction."""
     pca = prince.PCA(n_components=config.PCA_COMP)
     # get princical components
-    pca_fit = pca.fit(data_frame[list(num_attrs)])
+    data_frame_pca = train_data_frame[list(num_attrs)]
+    data_frame_pca = pd.concat([data_frame_pca, test_data_frame], axis=0)
+
+    pca_fit = pca.fit(data_frame_pca)
     # pca_fit.eigenvalues_summary
-    data_num_attr_pca = pca_fit.transform(data_frame[list(num_attrs)])
+    data_num_attr_pca = pca_fit.transform(data_frame_pca)
 
     return data_num_attr_pca
