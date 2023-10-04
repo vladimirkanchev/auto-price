@@ -76,7 +76,8 @@ def preprocess_cat_data_mca(train_data_frame: pd.DataFrame,
                             cat_attrs: Tuple) \
         -> pd.DataFrame:
     """Apply MCA on categorical attributes to use for auto price prediction."""
-    mca = prince.MCA(n_components=config.MCA_COMP)
+    mca = prince.MCA(n_components=config.MCA_COMP,
+                     random_state=config.RANDOM_SEED))
     # get principal components
     data_frame_mca = train_data_frame[list(cat_attrs)]
     data_frame_mca = pd.concat([data_frame_mca, test_data_frame], axis=0)
@@ -93,7 +94,8 @@ def preprocess_num_data_pca(train_data_frame: pd.DataFrame,
                             num_attrs: Tuple) \
         -> pd.DataFrame:
     """Apply PCA "on numerical attributes to use for auto price prediction."""
-    pca = prince.PCA(n_components=config.PCA_COMP)
+    pca = prince.PCA(n_components=config.PCA_COMP,
+                    random_state=config.RANDOM_SEED)
     # get princical components
     data_frame_pca = train_data_frame[list(num_attrs)]
     data_frame_pca = pd.concat([data_frame_pca, test_data_frame], axis=0)
