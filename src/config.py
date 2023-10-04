@@ -1,7 +1,10 @@
 """Introduce data path constants and model parameters."""
 from pathlib import Path
-
+from typing import Union
 from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
+
+ModelRegressor = Union[LinearRegression, SVR]
 
 MCA_COMP = 11
 # MCA_VIS_COMP = 2

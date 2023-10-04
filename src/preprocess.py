@@ -11,39 +11,43 @@ import utils
 # mode_imputation, convert_cat_ord_to_num
 
 
-def preprocess_impute(data_frame: pd.DataFrame):
+def preprocess_impute(data_frame: pd.DataFrame) \
+        -> pd.DataFrame:
     """Find out and impute missing values in the loaded auto data."""
     data_frame = utils.replace_missing(data_frame)
     data_frame = utils.mean_imputation(data_frame, config.NUM_ATTR)
     data_frame = utils.mode_imputation(data_frame, config.CAT_ATTR)
     data_frame = utils.zero_imputation(data_frame, config.CAT_ORD_ATTR)
+
     data_frame = utils.convert_cat_ord_to_num(data_frame)
+
     data_frame["symboling"] = data_frame["symboling"].astype(str)
     data_frame = utils.mode_imputation(data_frame, config.SYMBOLING)
+
     return data_frame
 
 
-def preprocess_transform(data_frame: pd.DataFrame, test_data_frame,
-                         transform: Tuple = 'None'):
+def preprocess_transform(train_data_frame: pd.DataFrame,
+                         test_data_frame: pd.DataFrame,
+                         transform: Tuple = 'None') \
+        -> Tuple[pd.DataFrame, pd.Series]:
     """Apply PCA and MCA on numerical and categorical data respectively."""
     if transform is None:
-        return data_frame
+        return train_data_frame
 
-    # num_data_tr = pd.DataFrame()
     cat_data_tr = pd.DataFrame()
 
     if 'mca' in transform:
         cat_attr_new = tuple(itertools.chain(config.CAT_ATTR,
                                              config.SYMBOLING))
-        cat_data_tr = preprocess_cat_data_mca(data_frame,
+        cat_data_tr = preprocess_cat_data_mca(train_data_frame,
                                               test_data_frame,
-                                              cat_attr_new
-                                              )
+                                              cat_attr_new)
 
     if 'pca' in transform:
-        num_attr = list(itertools.chain(config.NUM_ATTR, config.CAT_ORD_ATTR))
-        num_attr.remove('price')
-        # num_attr_new = tuple(num_attr)
+        num_attr_list = list(itertools.chain(config.NUM_ATTR,
+                                             config.CAT_ORD_ATTR))
+        num_attr = tuple(num_attr_list.remove('price'))
         # num_data_tr = preprocess_num_data_pca(data_frame, num_attr_new)
 
     train_data_tr = cat_data_tr.iloc[:-1]
@@ -53,13 +57,14 @@ def preprocess_transform(data_frame: pd.DataFrame, test_data_frame,
     return train_data_tr, test_data_tr
 
 
-def preprocess_cat_data_mca(data_frame: pd.DataFrame,
+def preprocess_cat_data_mca(train_data_frame: pd.DataFrame,
                             test_data_frame: pd.DataFrame,
-                            cat_attrs: Tuple):
+                            cat_attrs: Tuple) \
+        -> pd.DataFrame:
     """Apply MCA on categorical attributes to use for auto price prediction."""
     mca = prince.MCA(n_components=config.MCA_COMP)
     # get principal components
-    data_frame_mca = data_frame[list(cat_attrs)]
+    data_frame_mca = train_data_frame[list(cat_attrs)]
     data_frame_mca = pd.concat([data_frame_mca, test_data_frame], axis=0)
     mca_fit = mca.fit(data_frame_mca)
 
@@ -69,7 +74,9 @@ def preprocess_cat_data_mca(data_frame: pd.DataFrame,
     return data_cat_attr_mca
 
 
-def preprocess_num_data_pca(data_frame: pd.DataFrame, num_attrs: Tuple):
+def preprocess_num_data_pca(data_frame: pd.DataFrame,
+                            num_attrs: Tuple) \
+        -> pd.DataFrame:
     """Apply PCA "on numerical attributes to use for auto price prediction."""
     pca = prince.PCA(n_components=config.PCA_COMP)
     # get princical components

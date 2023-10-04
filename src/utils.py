@@ -8,36 +8,48 @@ import pandas as pd
 import config
 
 
-def replace_missing(data_frame: pd.DataFrame):
+def replace_missing(data_frame: pd.DataFrame) \
+        -> pd.DataFrame:
     """Replace missed values from the loaded file with 'NA'."""
     data_frame.replace('?', np.nan, inplace=True)
+
     return data_frame
 
 
-def mean_imputation(data_frame: pd.DataFrame, num_attrs: Tuple):
+def mean_imputation(data_frame: pd.DataFrame,
+                    num_attrs: Tuple) \
+        -> pd.DataFrame:
     """Replace NA value in numeric attribute with mean attr value."""
     for attr in num_attrs:
         mean_cat = data_frame[attr].mean()
         data_frame[attr].fillna(mean_cat, inplace=True)
+
     return data_frame
 
 
-def mode_imputation(data_frame, cat_attrs: Tuple):
+def mode_imputation(data_frame: pd.DataFrame,
+                    cat_attrs: Tuple) \
+        -> pd.DataFrame:
     """Replace missing category value with the most common attr value."""
     for attr in cat_attrs:
         mode_cat = data_frame[attr].mode()[0]
         data_frame[attr].fillna(mode_cat, inplace=True)
+
     return data_frame
 
 
-def zero_imputation(data_frame: pd.DataFrame, cat_ord_attrs: Tuple):
+def zero_imputation(data_frame: pd.DataFrame,
+                    cat_ord_attrs: Tuple) \
+        -> pd.DataFrame:
     """Replace the missing category ordinal value with 0."""
     for attr in cat_ord_attrs:
         data_frame[attr].fillna(0, inplace=True)
+
     return data_frame
 
 
-def convert_cat_ord_to_num(data_frame: pd.DataFrame):
+def convert_cat_ord_to_num(data_frame: pd.DataFrame) \
+        -> pd.DataFrame:
     """Convert cat ordinal to numerical in order to compute correlation."""
     data_frame['normalized-losses'] = data_frame['normalized-losses'].dropna(
                                         ).astype(int)
@@ -50,13 +62,15 @@ def convert_cat_ord_to_num(data_frame: pd.DataFrame):
     return data_frame
 
 
-def save_model(model: object):
+def save_model(model: config.ModelRegressor) \
+        -> None:
     """Save car price predicted model."""
     with open(config.MODEL_PATHNAME, 'wb') as file:
         pickle.dump(model, file)
 
 
-def load_model():
+def load_model() \
+        -> config.ModelRegressor:
     """Load car price predicted model."""
     with open(config.MODEL_PATHNAME, 'rb') as file:
         model = pickle.load(file)

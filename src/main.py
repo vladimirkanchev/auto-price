@@ -1,4 +1,6 @@
 """Main function to start auto prediction algorithm."""
+from typing import Tuple
+
 import pandas as pd
 import streamlit as st
 
@@ -8,7 +10,8 @@ from preprocess import preprocess_impute, preprocess_transform
 from model import train_model, inference_model
 
 
-def load_data_frame():
+def load_data_frame() \
+        -> Tuple[pd.DataFrame, object]:
     """First toy example of auto prediction algorithm."""
     data_frame = load_data()
     data_frame = preprocess_impute(data_frame)
