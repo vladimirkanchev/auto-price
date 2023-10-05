@@ -1,7 +1,6 @@
 """An entrypoint file for price car prediction."""
 import sys
 
-
 import pandas as pd
 import streamlit as st
 
@@ -10,7 +9,8 @@ from model import train_and_predict_car_price
 from preprocess import load_data_preprocess
 
 
-def enter_car_parameters():
+def enter_car_parameters() \
+        -> pd.DataFrame:
     """Get test car paramters provide by user through App."""
     st.title("ML App for Car Prediction Price:")
     st.text("Enter the parameters of the car:")
@@ -96,7 +96,8 @@ def enter_car_parameters():
         return test_data_frame
 
 
-def output_price(price):
+def output_price(price: float) \
+        -> None:
     """Output prince on App."""
     submit = st.button("Compute", type="primary")
 
@@ -104,7 +105,8 @@ def output_price(price):
         st.write('Market car price is: ' + str(price) + ' dollars')
 
 
-def run():
+def run() \
+        -> None:
     """Run streamlit application with data from backend."""
     train_data_frame, target, _ = load_data_preprocess()
 

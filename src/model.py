@@ -10,9 +10,11 @@ from sklearn.metrics import r2_score
 import config
 from preprocess import preprocess_transform
 
-def train_and_predict_car_price(train_data_frame,
-                                test_data_frame,
-                                target):
+
+def train_and_predict_car_price(train_data_frame: pd.DataFrame,
+                                test_data_frame: pd.DataFrame,
+                                target: pd.Series) \
+        -> float:
     """Train the model on MCA transformed auto data with new car parameters."""
     x_train, x_test = preprocess_transform(train_data_frame,
                                            test_data_frame,
@@ -25,6 +27,7 @@ def train_and_predict_car_price(train_data_frame,
     price = round(result['Predicts'][0][0], 2)
 
     return price
+
 
 def train_model(x_train: pd.DataFrame,
                 y_train: pd.DataFrame,

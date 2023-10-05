@@ -1,6 +1,6 @@
 """Preprocess data for training."""
 import itertools
-from typing import Tuple
+from typing import Dict, List, Tuple
 
 import pandas as pd
 import prince
@@ -11,8 +11,9 @@ import utils
 # from utils import replace_missing, mean_imputation,
 # mode_imputation, convert_cat_ord_to_num
 
+
 def load_data_preprocess() \
-        -> Tuple[pd.DataFrame, object]:
+        -> Tuple[pd.DataFrame, pd.Series, Dict[str, List[str]]]:
     """First toy example of auto prediction algorithm."""
     data_frame = load_data()
     data_frame = preprocess_impute(data_frame)
