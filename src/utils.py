@@ -1,6 +1,6 @@
 """'Helper functions for auto car prediction."""
 import pickle
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 
 import numpy as np
 import pandas as pd
@@ -64,11 +64,11 @@ def convert_cat_ord_to_num(data_frame: pd.DataFrame) \
 
 def get_unique_cat_values(data_frame: pd.DataFrame,
                           cat_attrs: Tuple = config.CAT_ATTR) \
-        -> Dict[str, List[str]]:
+        -> Dict[str, Tuple[str]]:
     """Get unique values from the categorical attributes of auto dataset."""
     unq_cat_values = {}
     for cat in cat_attrs:
-        unq_cat_values[cat] = data_frame[cat].unique()
+        unq_cat_values[cat] = tuple(data_frame[cat].unique())
 
     return unq_cat_values
 

@@ -1,6 +1,6 @@
 """Preprocess data for training."""
 import itertools
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 
 import pandas as pd
 import prince
@@ -13,7 +13,7 @@ import utils
 
 
 def load_data_preprocess() \
-        -> Tuple[pd.DataFrame, pd.Series, Dict[str, List[str]]]:
+        -> Tuple[pd.DataFrame, pd.Series, Dict[str, Tuple[str]]]:
     """First toy example of auto prediction algorithm."""
     data_frame = load_data()
     data_frame = preprocess_impute(data_frame)
