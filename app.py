@@ -1,5 +1,6 @@
 """An entrypoint file for price car prediction."""
 import sys
+from typing import Dict, Tuple
 
 import pandas as pd
 import streamlit as st
@@ -9,7 +10,7 @@ from model import train_and_predict_car_price
 from preprocess import load_data_preprocess
 
 
-def enter_car_parameters() \
+def enter_car_parameters(cat_uniq_dict: Dict[str, Tuple[str]]) \
         -> pd.DataFrame:
     """Get test car paramters provide by user through App."""
     st.title("ML App for Car Prediction Price:")
@@ -18,65 +19,44 @@ def enter_car_parameters() \
     left_column, right_column = st.columns(2)
     with left_column:
         make = st.selectbox(
-            'Car Brand:', ('audi', 'bmw', 'honda',
-                           'chevrolet', 'dodge',
-                           'isuzu', 'mazda', 'jaguar',
-                           'mercedes-benz', 'mitsubishi'
-                           'peugot', 'nissan', 'saab',
-                           'toyota', 'volkswagen', 'volvo')
-            )
+            'Car Brand:', cat_uniq_dict['make'])
         st.write('You selected:', make)
 
         fuel_type = st.selectbox(
-            'Type of car fuel:', ('gas', 'diesel')
-            )
+            'Type of car fuel:', cat_uniq_dict['fuel-type'])
         st.write('You selected:', fuel_type)
 
         aspiration = st.selectbox(
-            'Type of car engine:', ('std', 'turbo')
-            )
+            'Type of car engine:', cat_uniq_dict['aspiration'])
         st.write('You selected:', aspiration)
 
         num_of_doors = st.selectbox(
-            'Number of car doors:', ('two', 'four')
-            )
+            'Number of car doors:', cat_uniq_dict['num-of-doors'])
         st.write('You selected:', num_of_doors)
 
         body_style = st.selectbox(
-            'Car body style:', ('convertible', 'hatchback',
-                                'sedan', 'wagon', 'hardtop')
-            )
+            'Car body style:', cat_uniq_dict['body-style'])
         st.write('You selected:', body_style)
 
     with right_column:
         drive_wheels = st.selectbox(
-            'Drive wheels:', ('rwd', '4wd', 'fwd')
-            )
+            'Drive wheels:', cat_uniq_dict['drive-wheels'])
         st.write('You selected:', drive_wheels)
 
         engine_location = st.selectbox(
-            'Car engine position:', ('front', 'rear')
-            )
+            'Car engine position:', cat_uniq_dict['engine-location'])
         st.write('You selected:', engine_location)
 
         engine_type = st.selectbox(
-            'Type of engine:', ('dohc', 'ohcv', 'ohc',
-                                'rotor')
-            )
+            'Type of engine:', cat_uniq_dict['engine-type'])
         st.write('You selected:', engine_type)
 
         num_of_cylinders = st.selectbox(
-            'Number of engine cylinders:', ('two', 'three', 'four',
-                                            'five', 'six', 'eight',
-                                            'twelve')
-            )
+            'Number of engine cylinders:', cat_uniq_dict['num-of-cylinders'])
         st.write('You selected:', num_of_cylinders)
 
         fuel_system = st.selectbox(
-            'Type of injection fuel:', ('1bbl', '2bbl', '4bbl',
-                                        'mpfi', 'mfi', 'idi',
-                                        'spdi')
-            )
+            'Type of injection fuel:', cat_uniq_dict['fuel-system'])
         st.write('You selected:', fuel_system)
 
         test_car = {'make': make,
@@ -108,9 +88,9 @@ def output_price(price: float) \
 def run() \
         -> None:
     """Run streamlit application with data from backend."""
-    train_data_frame, target, _ = load_data_preprocess()
+    train_data_frame, target, cat_uniq_dict = load_data_preprocess()
 
-    test_data_frame = enter_car_parameters()
+    test_data_frame = enter_car_parameters(cat_uniq_dict)
 
     price = train_and_predict_car_price(train_data_frame,
                                         test_data_frame,
