@@ -8,7 +8,23 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import r2_score
 
 import config
+from preprocess import preprocess_transform
 
+def train_and_predict_car_price(train_data_frame,
+                                test_data_frame,
+                                target):
+    """Train the model on MCA transformed auto data with new car parameters."""
+    x_train, x_test = preprocess_transform(train_data_frame,
+                                           test_data_frame,
+                                           transform=('mca', )
+                                           )
+    y_train = target
+    trained_models = train_model(x_train, y_train, config.MODELS)
+
+    result = inference_model(x_test, trained_models)
+    price = round(result['Predicts'][0][0], 2)
+
+    return price
 
 def train_model(x_train: pd.DataFrame,
                 y_train: pd.DataFrame,

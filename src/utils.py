@@ -62,6 +62,16 @@ def convert_cat_ord_to_num(data_frame: pd.DataFrame) \
     return data_frame
 
 
+def get_unique_cat_values(data_frame: pd.DataFrame,
+                          cat_attrs: Tuple = config.CAT_ATTR):
+    """Get unique values from the categorical attributes of auto dataset."""
+    unq_cat_values = {}
+    for cat in cat_attrs:
+        unq_cat_values[cat] = data_frame[cat].unique()
+
+    return unq_cat_values
+
+
 def save_model(model: config.ModelRegressor) \
         -> None:
     """Save car price predicted model."""

@@ -6,9 +6,22 @@ import pandas as pd
 import prince
 
 import config
+from data_setup import load_data
 import utils
 # from utils import replace_missing, mean_imputation,
 # mode_imputation, convert_cat_ord_to_num
+
+def load_data_preprocess() \
+        -> Tuple[pd.DataFrame, object]:
+    """First toy example of auto prediction algorithm."""
+    data_frame = load_data()
+    data_frame = preprocess_impute(data_frame)
+
+    target = data_frame['price']
+    data_frame = data_frame.drop('price', axis=1)
+    cat_unq_values = utils.get_unique_cat_values(data_frame)
+
+    return data_frame, target, cat_unq_values
 
 
 def preprocess_impute(data_frame: pd.DataFrame) \
@@ -77,7 +90,7 @@ def preprocess_cat_data_mca(train_data_frame: pd.DataFrame,
         -> pd.DataFrame:
     """Apply MCA on categorical attributes to use for auto price prediction."""
     mca = prince.MCA(n_components=config.MCA_COMP,
-                     random_state=config.RANDOM_SEED))
+                     random_state=config.RANDOM_SEED)
     # get principal components
     data_frame_mca = train_data_frame[list(cat_attrs)]
     data_frame_mca = pd.concat([data_frame_mca, test_data_frame], axis=0)
@@ -95,7 +108,7 @@ def preprocess_num_data_pca(train_data_frame: pd.DataFrame,
         -> pd.DataFrame:
     """Apply PCA "on numerical attributes to use for auto price prediction."""
     pca = prince.PCA(n_components=config.PCA_COMP,
-                    random_state=config.RANDOM_SEED)
+                     random_state=config.RANDOM_SEED)
     # get princical components
     data_frame_pca = train_data_frame[list(num_attrs)]
     data_frame_pca = pd.concat([data_frame_pca, test_data_frame], axis=0)
