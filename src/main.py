@@ -15,7 +15,7 @@ def main():
     price = model.train_and_predict_car_price(train_data_frame,
                                               test_data_frame,
                                               target)
-    print(test_data_frame)
+
     print(f"Predicted car price: {price}")
 
 

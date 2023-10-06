@@ -1,35 +1,58 @@
-"""Introduce data path constants and model parameters."""
+"""Introduce configu file with data path constants and model parameters."""
 from pathlib import Path
 from typing import Union
 
-import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.svm import SVR
 
-ModelRegressor = Union[LinearRegression, SVR]
+TYPE = {
+    "modelregressor": Union[LinearRegression, SVR]
+}
 
-MCA_COMP = 11
-# MCA_VIS_COMP = 2
-PCA_COMP = 15
-# PCA_VIS_COMP = 2
-RANDOM_SEED = 42
-np.random.seed(RANDOM_SEED)
+GUI = {
+    "nrows": 5,
+    "ncols": 2
+}
 
-PROJECT_PATHNAME = Path(__file__).resolve().parent.parent
-DATA_PATHNAME = PROJECT_PATHNAME / 'data/Automobile_data.csv'
-MODEL_PATHNAME = PROJECT_PATHNAME / 'models/auto_price_predict.pkl'
+MESSAGE = {
+    "0": "Car Brand:",
+    "1": "Type of car fuel:",
+    "2": "Type of car engine:",
+    "3": "Number of car doors:",
+    "4": "Car body style:",
+    "5": "Drive wheels:",
+    "6": "Car engine position:",
+    "7": "Type of engine:",
+    "8": "Number of engine cylinders:",
+    "9": "fuel-system"
+}
 
+COMPONENT = {
+    "mcacomponents": 11,
+    "pcacomopnents": 15,
+    "randomseed": 42
+}
 
-CAT_ATTR = ("make", "fuel-type", "aspiration", "num-of-doors", "body-style",
-            "drive-wheels", "engine-location", "engine-type",
-            "num-of-cylinders", "fuel-system")
-CAT_ORD_ATTR = ('normalized-losses', 'bore', 'stroke', 'horsepower',
-                'peak-rpm', 'price')
-NUM_ATTR = ("wheel-base", "length", "width", "height", "curb-weight",
-            "engine-size", "compression-ratio", "city-mpg", "highway-mpg")
-SYMBOLING = ("symboling",)
+PATH = {
+    "datapathname": Path(__file__).resolve().parent.parent /
+    "data/Automobile_data.csv",
+    "modelpathname": Path(__file__).resolve().parent.parent /
+    "models/auto_price_predict.pkl"
+}
 
+ATTRIBUTE = {
+    "catattr": ("make", "fuel-type", "aspiration", "num-of-doors",
+                "body-style", "drive-wheels", "engine-location",
+                "engine-type", "num-of-cylinders", "fuel-system"),
+    "catordattr": ("normalized-losses", "bore", "stroke",
+                   "horsepower", "peak-rpm", "price"),
+    "numattr": ("wheel-base", "length", "width", "height",
+                "curb-weight", "engine-size", "compression-ratio",
+                "city-mpg", "highway-mpg"),
+    "symb": ("symboling",),
+    "target": ("price",)
+}
 
-MODELS = {
-         'LinearRegression': LinearRegression()
-         }
+MODEL = {
+    'linearregression': LinearRegression()
+}

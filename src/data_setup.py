@@ -1,6 +1,7 @@
 """Load, save and generate data operations."""
 import random
 from typing import Dict, Tuple
+
 import pandas as pd
 
 import config
@@ -9,7 +10,7 @@ import config
 def load_data() \
         -> pd.DataFrame:
     """Load raw auto data."""
-    data_frame = pd.read_csv(config.DATA_PATHNAME)
+    data_frame = pd.read_csv(config.PATH['datapathname'])
 
     return data_frame
 
@@ -18,7 +19,7 @@ def random_generate_test_car(cat_uniq_dict: Dict[str, Tuple[str]]) \
         -> pd.DataFrame:
     """Generate a test car with random parameter values met in auto dataset."""
     rand_car_props = {}
-
+    print(cat_uniq_dict)
     for key, val in cat_uniq_dict.items():
         rand_car_props[key] = [random.choice(list(val))]
 

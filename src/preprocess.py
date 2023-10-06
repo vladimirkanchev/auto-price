@@ -8,8 +8,6 @@ import prince
 import config
 from data_setup import load_data
 import utils
-# from utils import replace_missing, mean_imputation,
-# mode_imputation, convert_cat_ord_to_num
 
 
 def load_data_preprocess() \
@@ -18,9 +16,12 @@ def load_data_preprocess() \
     data_frame = load_data()
     data_frame = preprocess_impute(data_frame)
 
-    target = data_frame['price']
-    data_frame = data_frame.drop('price', axis=1)
-    cat_unq_values = utils.get_unique_cat_values(data_frame)
+    target = data_frame[list(config.ATTRIBUTE['target'])]
+    data_frame = data_frame.drop(list(config.ATTRIBUTE['target']), axis=1)
+
+    cat_unq_values = utils.get_unique_cat_values(data_frame,
+                                                 config.ATTRIBUTE[
+                                                        'catattr'])
 
     return data_frame, target, cat_unq_values
 
@@ -29,14 +30,22 @@ def preprocess_impute(data_frame: pd.DataFrame) \
         -> pd.DataFrame:
     """Find out and impute missing values in the loaded auto data."""
     data_frame = utils.replace_missing(data_frame)
-    data_frame = utils.mean_imputation(data_frame, config.NUM_ATTR)
-    data_frame = utils.mode_imputation(data_frame, config.CAT_ATTR)
-    data_frame = utils.zero_imputation(data_frame, config.CAT_ORD_ATTR)
+
+    data_frame = utils.mean_imputation(data_frame,
+                                       config.ATTRIBUTE['numattr'])
+    data_frame = utils.mode_imputation(data_frame,
+                                       config.ATTRIBUTE['catattr'])
+    data_frame = utils.zero_imputation(data_frame,
+                                       config.ATTRIBUTE['catordattr'])
 
     data_frame = utils.convert_cat_ord_to_num(data_frame)
 
-    data_frame["symboling"] = data_frame["symboling"].astype(str)
-    data_frame = utils.mode_imputation(data_frame, config.SYMBOLING)
+    sym_attr = config.ATTRIBUTE['symb']
+    data_frame[sym_attr] = data_frame[list(sym_attr)].astype(str)
+    mode_cat = data_frame[sym_attr].mode()[0]
+    data_frame[sym_attr].fillna(mode_cat, inplace=True)
+    # data_frame = utils.mode_imputation(data_frame,
+    #                                   config.ATTRIBUTE['symb'])
 
     return data_frame
 
@@ -55,8 +64,9 @@ def preprocess_transform(train_data_frame: pd.DataFrame,
         return train_data_frame, test_data_frame
 
     if 'mca' in transform:
-        cat_attr_new = tuple(itertools.chain(config.CAT_ATTR,
-                                             config.SYMBOLING))
+        # cat_attr_new = tuple(itertools.chain(config.ATTRIBUTE['catattr'],
+        #                                     config.ATTRIBUTE['symb']))
+        cat_attr_new = list(config.ATTRIBUTE['catattr'])
         cat_data_tr = preprocess_cat_data_mca(train_data_frame,
                                               test_data_frame,
                                               cat_attr_new)
@@ -66,9 +76,10 @@ def preprocess_transform(train_data_frame: pd.DataFrame,
             return train_data_tr, test_data_tr
 
     if 'pca' in transform:
-        num_attr_list = list(itertools.chain(config.NUM_ATTR,
-                                             config.CAT_ORD_ATTR))
-        num_attr = tuple(num_attr_list.remove('price'))
+        num_attr_list = list(itertools.chain(config.ATTRIBUTE['numattr'],
+                                             config.ATTRIBUTE[
+                                                    'catordattr']))
+        num_attr = tuple(num_attr_list.remove(config.ATTRIBUTE['target']))
         num_data_tr = preprocess_num_data_pca(train_data_frame,
                                               test_data_frame,
                                               num_attr)
@@ -90,8 +101,8 @@ def preprocess_cat_data_mca(train_data_frame: pd.DataFrame,
                             cat_attrs: Tuple) \
         -> pd.DataFrame:
     """Apply MCA on categorical attributes to use for auto price prediction."""
-    mca = prince.MCA(n_components=config.MCA_COMP,
-                     random_state=config.RANDOM_SEED)
+    mca = prince.MCA(n_components=config.COMPONENT['mcacomponents'],
+                     random_state=config.COMPONENT['randomseed'])
     # get principal components
     data_frame_mca = train_data_frame[list(cat_attrs)]
     data_frame_mca = pd.concat([data_frame_mca, test_data_frame], axis=0)
@@ -108,8 +119,8 @@ def preprocess_num_data_pca(train_data_frame: pd.DataFrame,
                             num_attrs: Tuple) \
         -> pd.DataFrame:
     """Apply PCA "on numerical attributes to use for auto price prediction."""
-    pca = prince.PCA(n_components=config.PCA_COMP,
-                     random_state=config.RANDOM_SEED)
+    pca = prince.PCA(n_components=config.COMPONENT['mcacomponents'],
+                     random_state=config.COMPONENT['randomseed'])
     # get princical components
     data_frame_pca = train_data_frame[list(num_attrs)]
     data_frame_pca = pd.concat([data_frame_pca, test_data_frame], axis=0)

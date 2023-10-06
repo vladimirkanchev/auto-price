@@ -63,7 +63,7 @@ def convert_cat_ord_to_num(data_frame: pd.DataFrame) \
 
 
 def get_unique_cat_values(data_frame: pd.DataFrame,
-                          cat_attrs: Tuple = config.CAT_ATTR) \
+                          cat_attrs: Tuple) \
         -> Dict[str, Tuple[str]]:
     """Get unique values from the categorical attributes of auto dataset."""
     unq_cat_values = {}
@@ -73,17 +73,17 @@ def get_unique_cat_values(data_frame: pd.DataFrame,
     return unq_cat_values
 
 
-def save_model(model: config.ModelRegressor) \
+def save_model(model: object) \
         -> None:
     """Save car price predicted model."""
-    with open(config.MODEL_PATHNAME, 'wb') as file:
+    with open(config.PATH['modelpathname'], 'wb') as file:
         pickle.dump(model, file)
 
 
 def load_model() \
-        -> config.ModelRegressor:
+        -> object:
     """Load car price predicted model."""
-    with open(config.MODEL_PATHNAME, 'rb') as file:
+    with open(config.PATH['modelpathname'], 'rb') as file:
         model = pickle.load(file)
 
     return model
