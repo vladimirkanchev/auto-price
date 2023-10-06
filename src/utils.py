@@ -73,7 +73,7 @@ def get_unique_cat_values(data_frame: pd.DataFrame,
     return unq_cat_values
 
 
-def save_model(model: object) \
+def save_model(model: config.TYPE['modelregressor']) \
         -> None:
     """Save car price predicted model."""
     with open(config.PATH['modelpathname'], 'wb') as file:
@@ -81,7 +81,7 @@ def save_model(model: object) \
 
 
 def load_model() \
-        -> object:
+        -> config.TYPE['modelregressor']:
     """Load car price predicted model."""
     with open(config.PATH['modelpathname'], 'rb') as file:
         model = pickle.load(file)

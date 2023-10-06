@@ -32,8 +32,8 @@ def train_and_predict_car_price(train_data_frame: pd.DataFrame,
 
 def train_model(x_train: pd.DataFrame,
                 y_train: pd.DataFrame,
-                models: Dict[str, object]) \
-        -> Dict[str, object]:
+                models: Dict[str, config.TYPE['modelregressor']]) \
+        -> Dict[str, config.TYPE['modelregressor']]:
     """Train the regression model on processed auto data."""
     trained_models = {}
 
@@ -47,8 +47,8 @@ def train_model(x_train: pd.DataFrame,
 def evaluate_model(x_val: pd.DataFrame,
                    y_val: pd.DataFrame,
                    trained_models: Dict[str,
-                                        object]) \
-        -> Dict[str, List[object | List[float]]]:
+                                        config.TYPE['modelregressor']]) \
+        -> Dict[str, List[str | List[float]]]:
     """Evaluate the trained regression model with set-aside evaluation data."""
     model_name, mae, mse, rmse, r_2 = [], [], [], [], []
 
@@ -70,8 +70,8 @@ def evaluate_model(x_val: pd.DataFrame,
 
 
 def inference_model(x_val: pd.DataFrame,
-                    trained_models: Dict[str, List[object]]) \
-        -> Dict[str, List[object | List[float]]]:
+                    trained_models: Dict[str, List[config.TYPE['modelregressor']]]) \
+        -> Dict[str, List[str | List[float]]]:
     """Evaluate the trained regression model with set-aside evaluation data."""
     model_name, predicts = [], []
 

@@ -19,7 +19,6 @@ def random_generate_test_car(cat_uniq_dict: Dict[str, Tuple[str]]) \
         -> pd.DataFrame:
     """Generate a test car with random parameter values met in auto dataset."""
     rand_car_props = {}
-    print(cat_uniq_dict)
     for key, val in cat_uniq_dict.items():
         rand_car_props[key] = [random.choice(list(val))]
 
