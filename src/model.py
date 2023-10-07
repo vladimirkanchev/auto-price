@@ -1,4 +1,5 @@
 """Train model for prediction."""
+# import logging
 from typing import Dict, List
 
 import numpy as np
@@ -8,6 +9,7 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import r2_score
 
 import config
+from logger import logging
 from preprocess import preprocess_transform
 
 
@@ -41,6 +43,9 @@ def train_model(x_train: pd.DataFrame,
         model.fit(x_train, y_train)
         trained_models[name] = model
 
+    logging.info("Train the price prediction model on auto dataset"
+                 + " successfully.")
+
     return trained_models
 
 
@@ -66,6 +71,9 @@ def evaluate_model(x_val: pd.DataFrame,
               'RMSE': rmse,
               'R2': r_2}
 
+    logging.info("Evaluate the price prediction model on auto dataset"
+                 + " successfully.")
+
     return result
 
 
@@ -83,5 +91,8 @@ def inference_model(x_val: pd.DataFrame,
 
     result = {'Model': model_name,
               'Predicts': predicts}
+
+    logging.info("Compute the car price using the trained model"
+                 + " successfully.")
 
     return result

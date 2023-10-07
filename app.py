@@ -7,6 +7,7 @@ import streamlit as st
 
 sys.path.append("src")
 import config
+from logger import logging
 from model import train_and_predict_car_price
 from preprocess import load_data_preprocess
 
@@ -39,6 +40,9 @@ def enter_car_parameters(cat_uniq_dict: Dict[str, Tuple[str]]) \
                 = [attr]
 
     test_data_frame = pd.DataFrame.from_dict(test_car)
+
+    logging.info("User enter values for categorical attributes of a test car"
+                 + " successfully.")
 
     return test_data_frame
 

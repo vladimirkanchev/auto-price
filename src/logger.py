@@ -1,11 +1,9 @@
 """Record important messages/warnings/errors into a log folder."""
 import logging
-import os
 
 import config
 # from datetime import datetime
 
-os.makedirs(config.PATH['logpathname'], exist_ok=True)
 
 logging.basicConfig(
     filename=config.PATH['logpathname'] / config.FILE['logfilename'],

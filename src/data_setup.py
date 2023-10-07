@@ -1,5 +1,4 @@
 """Load, save and generate data operations."""
-import logging
 import random
 import sys
 from typing import Dict, Tuple
@@ -8,6 +7,7 @@ import pandas as pd
 
 import config
 from exception import CustomException
+from logger import logging
 
 
 def load_data() \
@@ -34,6 +34,9 @@ def random_generate_test_car(cat_uniq_dict: Dict[str, Tuple[str]]) \
 
     test_data_frame = pd.DataFrame.from_dict(rand_car_props)
 
+    logging.info("Randomly generate categorical attributes of a test car"
+                 + " successfully (values are met in auto dataset).")
+
     return test_data_frame
 
 
@@ -52,5 +55,7 @@ def generate_test_car() \
                 'fuel-system': ['2bbl']
                 }
     test_data_frame = pd.DataFrame.from_dict(test_car)
+
+    logging.info("Generate categorical attributes of a test car")
 
     return test_data_frame

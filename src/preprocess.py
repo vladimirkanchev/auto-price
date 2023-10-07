@@ -7,6 +7,7 @@ import prince
 
 import config
 from data_setup import load_data
+from logger import logging
 import utils
 
 
@@ -46,6 +47,7 @@ def preprocess_impute(data_frame: pd.DataFrame) \
     data_frame[sym_attr].fillna(mode_cat, inplace=True)
     # data_frame = utils.mode_imputation(data_frame,
     #                                   config.ATTRIBUTE['symb'])
+    logging.info("Apply imputation of raw auto dataset successfully.")
 
     return data_frame
 
@@ -112,6 +114,9 @@ def preprocess_cat_data_mca(train_data_frame: pd.DataFrame,
     # mca_fit.eigenvalues_summary
     data_cat_attr_mca = mca_fit.transform(data_frame_mca)
 
+    logging.info("Apply MCA on categorical attributes of auto dataset"
+                 + " successfully.")
+
     return data_cat_attr_mca
 
 
@@ -129,5 +134,8 @@ def preprocess_num_data_pca(train_data_frame: pd.DataFrame,
     pca_fit = pca.fit(data_frame_pca)
     # pca_fit.eigenvalues_summary
     data_num_attr_pca = pca_fit.transform(data_frame_pca)
+
+    logging.info("Apply PCA on numerical attributes of auto dataset"
+                 + " successfully.")
 
     return data_num_attr_pca

@@ -1,10 +1,13 @@
 """Introduce configu file with data path constants and model parameters."""
 from datetime import datetime
+import os
 from pathlib import Path
 from typing import Union
 
 from sklearn.linear_model import LinearRegression
 from sklearn.svm import SVR
+
+import config
 
 TYPE = {
     "modelregressor": Union[LinearRegression, SVR]
@@ -44,7 +47,7 @@ PATH = {
     "modelpathname": Path(__file__).resolve().parent.parent / "models",
     "logpathname": Path(__file__).resolve().parent.parent / ".logs"
 }
-
+os.makedirs(config.PATH['logpathname'], exist_ok=True)
 
 ATTRIBUTE = {
     "catattr": ("make", "fuel-type", "aspiration", "num-of-doors",

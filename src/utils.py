@@ -1,11 +1,14 @@
 """'Helper functions for auto car prediction."""
+import logging
 import pickle
+import sys
 from typing import Dict, Tuple
 
 import numpy as np
 import pandas as pd
 
 import config
+from exception import CustomException
 
 
 def replace_missing(data_frame: pd.DataFrame) \
@@ -70,20 +73,38 @@ def get_unique_cat_values(data_frame: pd.DataFrame,
     for cat in cat_attrs:
         unq_cat_values[cat] = tuple(data_frame[cat].unique())
 
+    logging.info("Extract unique values for categorical attributes.")
+
     return unq_cat_values
 
 
 def save_model(model: config.TYPE['modelregressor']) \
         -> None:
-    """Save car price predicted model."""
-    with open(config.PATH['modelpathname'], 'wb') as file:
-        pickle.dump(model, file)
+    """Save a car price predicted model."""
+    try:
+        filename = config.PATH['modelpathname'] \
+            / config.FILE['modelfilename']
+        with open(filename, 'wb') as file:
+            pickle.dump(model, file)
+
+    except Exception as err:
+        raise CustomException(err, sys) from None
+
+    logging.info("Save price prediction model as a file.")
 
 
 def load_model() \
         -> config.TYPE['modelregressor']:
-    """Load car price predicted model."""
-    with open(config.PATH['modelpathname'], 'rb') as file:
-        model = pickle.load(file)
+    """Load a car price predicted model."""
+    try:
+        filename = config.PATH['modelpathname'] \
+            / config.FILE['modelfilename']
+        with open(filename, 'wb') as file:
+            model = pickle.load(file)
+
+    except Exception as err:
+        raise CustomException(err, sys) from None
+
+    logging.info("Load price prediction model.")
 
     return model
