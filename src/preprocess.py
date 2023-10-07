@@ -105,7 +105,8 @@ def preprocess_cat_data_mca(train_data_frame: pd.DataFrame,
                      random_state=config.COMPONENT['randomseed'])
     # get principal components
     data_frame_mca = train_data_frame[list(cat_attrs)]
-    data_frame_mca = pd.concat([data_frame_mca, test_data_frame], axis=0)
+    data_frame_mca = pd.concat([data_frame_mca, test_data_frame],
+                               axis=0, ignore_index=True)
     mca_fit = mca.fit(data_frame_mca)
 
     # mca_fit.eigenvalues_summary

@@ -1,16 +1,26 @@
 """Load, save and generate data operations."""
+import logging
 import random
+import sys
 from typing import Dict, Tuple
 
 import pandas as pd
 
 import config
+from exception import CustomException
 
 
 def load_data() \
         -> pd.DataFrame:
     """Load raw auto data."""
-    data_frame = pd.read_csv(config.PATH['datapathname'])
+    logging.info("Enter train auto data")
+    try:
+        filename = config.PATH['datapathname'] / config.FILE['datafilename']
+        data_frame = pd.read_csv(filename)
+        logging.info("Read auto dataset as a dataframe.")
+
+    except Exception as err:
+        raise CustomException(err, sys) from None
 
     return data_frame
 

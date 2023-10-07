@@ -70,7 +70,8 @@ def evaluate_model(x_val: pd.DataFrame,
 
 
 def inference_model(x_val: pd.DataFrame,
-                    trained_models: Dict[str, List[config.TYPE['modelregressor']]]) \
+                    trained_models: Dict[str, List[
+                        config.TYPE['modelregressor']]]) \
         -> Dict[str, List[str | List[float]]]:
     """Evaluate the trained regression model with set-aside evaluation data."""
     model_name, predicts = [], []

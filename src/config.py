@@ -1,4 +1,5 @@
 """Introduce configu file with data path constants and model parameters."""
+from datetime import datetime
 from pathlib import Path
 from typing import Union
 
@@ -33,12 +34,17 @@ COMPONENT = {
     "randomseed": 42
 }
 
-PATH = {
-    "datapathname": Path(__file__).resolve().parent.parent /
-    "data/Automobile_data.csv",
-    "modelpathname": Path(__file__).resolve().parent.parent /
-    "models/auto_price_predict.pkl"
+FILE = {
+    "logfilename": f"{datetime.now().strftime('%m_d%d_%Y_%H_%M_%S')}.log",
+    "modelfilename": "auto_price_predict.pkl",
+    "datafilename": "Automobile_data.csv",
 }
+PATH = {
+    "datapathname": Path(__file__).resolve().parent.parent / "data",
+    "modelpathname": Path(__file__).resolve().parent.parent / "models",
+    "logpathname": Path(__file__).resolve().parent.parent / ".logs"
+}
+
 
 ATTRIBUTE = {
     "catattr": ("make", "fuel-type", "aspiration", "num-of-doors",
