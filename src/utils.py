@@ -1,5 +1,4 @@
 """'Helper functions for auto car prediction."""
-import logging
 import pickle
 import sys
 from typing import Dict, Tuple
@@ -9,7 +8,7 @@ import pandas as pd
 
 import config
 from exception import CustomException
-
+from logger import logging
 
 def replace_missing(data_frame: pd.DataFrame) \
         -> pd.DataFrame:
