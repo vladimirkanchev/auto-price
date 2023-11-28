@@ -4,9 +4,9 @@ from typing import Dict, List
 
 import numpy as np
 import pandas as pd
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import r2_score
+from scikit-learn.metrics import mean_squared_error
+from scikit-learn.metrics import mean_absolute_error
+from scikit-learn.metrics import r2_score
 
 import config
 from logger import logging
