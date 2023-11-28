@@ -1,5 +1,6 @@
 """Train model for prediction."""
-from typing import Dict
+# import logging
+from typing import Dict, List
 
 import numpy as np
 import pandas as pd
@@ -7,20 +8,52 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import r2_score
 
+import config
+from logger import logging
+from preprocess import preprocess_transform
 
-def train_model(x_train: pd.DataFrame, y_train: pd.DataFrame, models: Dict):
-    """Train the regression model on auto data."""
+
+def train_and_predict_car_price(train_data_frame: pd.DataFrame,
+                                test_data_frame: pd.DataFrame,
+                                target: pd.Series) \
+        -> float:
+    """Train the model on MCA transformed auto data with new car parameters."""
+    x_train, x_test = preprocess_transform(train_data_frame,
+                                           test_data_frame,
+                                           transform=('mca', )
+                                           )
+    y_train = target
+    trained_models = train_model(x_train, y_train,
+                                 config.MODEL)
+
+    result = inference_model(x_test, trained_models)
+    price = np.round(result['Predicts'][0][0][0], 2)
+
+    return price
+
+
+def train_model(x_train: pd.DataFrame,
+                y_train: pd.DataFrame,
+                models: Dict[str, config.TYPE['modelregressor']]) \
+        -> Dict[str, config.TYPE['modelregressor']]:
+    """Train the regression model on processed auto data."""
     trained_models = {}
 
     for name, model in models.items():
         model.fit(x_train, y_train)
         trained_models[name] = model
 
+    logging.info("Train the price prediction model on auto dataset"
+                 + " successfully.")
+
     return trained_models
 
 
-def evaluate_model(x_val: pd.DataFrame, y_val: pd.DataFrame,
-                   trained_models: Dict):
+def evaluate_model(x_val: pd.DataFrame,
+                   y_val: pd.DataFrame,
+                   trained_models: Dict[str,
+                                        config.TYPE['modelregressor']]) \
+        -> Dict[str, List[str | List[float]]]:
     """Evaluate the trained regression model with set-aside evaluation data."""
     model_name, mae, mse, rmse, r_2 = [], [], [], [], []
 
@@ -38,10 +71,16 @@ def evaluate_model(x_val: pd.DataFrame, y_val: pd.DataFrame,
               'RMSE': rmse,
               'R2': r_2}
 
+    logging.info("Evaluate the price prediction model on auto dataset"
+                 + " successfully.")
+
     return result
 
 
-def inference_model(x_val: pd.DataFrame, trained_models: Dict):
+def inference_model(x_val: pd.DataFrame,
+                    trained_models: Dict[str, List[
+                        config.TYPE['modelregressor']]]) \
+        -> Dict[str, List[str | List[float]]]:
     """Evaluate the trained regression model with set-aside evaluation data."""
     model_name, predicts = [], []
 
@@ -52,5 +91,8 @@ def inference_model(x_val: pd.DataFrame, trained_models: Dict):
 
     result = {'Model': model_name,
               'Predicts': predicts}
+
+    logging.info("Compute the car price using the trained model"
+                 + " successfully.")
 
     return result
