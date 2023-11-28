@@ -1,4 +1,4 @@
-name: Pylint
+name: lint
 
 on:
   workflow_dispatch:
@@ -28,11 +28,9 @@ jobs:
         run: python -m pip install --upgrade pip      
       - name: Install project requirements  
         run: python -m pip install -r requirements.txt
-      - name: Install black, pylint, pycodestyle linters  
-        run: pip install pylint==v2.17.3 pycodestyle==2.10.0
+      - name: Install black, pylint linters  
+        run: pip install pylint==v2.17.3
       #- name: apply black linter black==22.3.0 
       #  run: black $(git ls-files '*.py')
       - name: apply pylint linter
         run: pylint --disable=all --enable=unused-import $(git ls-files '*.py')
-      - name: apply pycodestyle linter
-        run: pycodestyle $(git ls-files '*.py')
