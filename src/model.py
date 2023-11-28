@@ -1,6 +1,6 @@
 """Train model for prediction."""
 # import logging
-from typing import Dict, List
+from typing import Dict, List, Any
 
 import numpy as np
 import pandas as pd
@@ -34,8 +34,8 @@ def train_and_predict_car_price(train_data_frame: pd.DataFrame,
 
 def train_model(x_train: pd.DataFrame,
                 y_train: pd.DataFrame,
-                models: Dict[str, config.TYPE['modelregressor']]) \
-        -> Dict[str, config.TYPE['modelregressor']]:
+                models: Dict[str, Any]) \
+        -> Dict[str, Any]:
     """Train the regression model on processed auto data."""
     trained_models = {}
 
@@ -51,13 +51,12 @@ def train_model(x_train: pd.DataFrame,
 
 def evaluate_model(x_val: pd.DataFrame,
                    y_val: pd.DataFrame,
-                   trained_models: Dict[str,
-                                        config.TYPE['modelregressor']]) \
+                   trained_models: Dict[str, Any]) \
         -> Dict[str, List[str | List[float]]]:
     """Evaluate the trained regression model with set-aside evaluation data."""
     model_name, mae, mse, rmse, r_2 = [], [], [], [], []
 
-    for name, trained_model in trained_models.items():
+    for name, trained_model in trained_models:
         predictions = trained_model.predict(x_val)
         model_name.append(name)
         mae.append(mean_absolute_error(y_val, predictions))
@@ -78,8 +77,7 @@ def evaluate_model(x_val: pd.DataFrame,
 
 
 def inference_model(x_val: pd.DataFrame,
-                    trained_models: Dict[str, List[
-                        config.TYPE['modelregressor']]]) \
+                    trained_models: Dict[str, Any]) \
         -> Dict[str, List[str | List[float]]]:
     """Evaluate the trained regression model with set-aside evaluation data."""
     model_name, predicts = [], []

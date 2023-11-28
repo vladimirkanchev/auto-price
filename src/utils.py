@@ -2,7 +2,7 @@
 import logging
 import pickle
 import sys
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Any
 
 import numpy as np
 import pandas as pd
@@ -78,7 +78,7 @@ def get_unique_cat_values(data_frame: pd.DataFrame,
     return unq_cat_values
 
 
-def save_model(model: config.TYPE['modelregressor']) \
+def save_model(model: Any) \
         -> None:
     """Save a car price predicted model."""
     try:
@@ -93,8 +93,7 @@ def save_model(model: config.TYPE['modelregressor']) \
     logging.info("Save price prediction model as a file.")
 
 
-def load_model() \
-        -> config.TYPE['modelregressor']:
+def load_model() -> Any:
     """Load a car price predicted model."""
     try:
         filename = config.PATH['modelpathname'] \

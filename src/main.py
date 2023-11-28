@@ -1,5 +1,5 @@
 """Main function to start auto prediction algorithm."""
-import logging 
+import logging
 
 import data_setup as ds
 import preprocess as pp
@@ -19,7 +19,7 @@ def main():
                                               target)
     logging.info("Current test data frame:")
     logging.info(test_data_frame)
-    logging.info("Predicted car price: {price}")
+    logging.info("Predicted car price: {%f}", price)
 
 
 if __name__ == "__main__":
