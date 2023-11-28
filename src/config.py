@@ -28,7 +28,7 @@ MESSAGE = {
     "6": "Car engine position:",
     "7": "Type of engine:",
     "8": "Number of engine cylinders:",
-    "9": "fuel-system"
+    "9": "Fuel system"
 }
 
 COMPONENT = {
