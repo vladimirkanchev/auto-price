@@ -1,4 +1,6 @@
 """Main function to start auto prediction algorithm."""
+import logging
+
 import data_setup as ds
 import preprocess as pp
 import model
@@ -15,8 +17,9 @@ def main():
     price = model.train_and_predict_car_price(train_data_frame,
                                               test_data_frame,
                                               target)
-    print(test_data_frame)
-    print(f"Predicted car price: {price}")
+    logging.info("Current test data frame:")
+    logging.info(test_data_frame)
+    logging.info("Predicted car price: {%f}", price)
 
 
 if __name__ == "__main__":
