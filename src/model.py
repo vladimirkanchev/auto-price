@@ -18,15 +18,13 @@ def train_and_predict_car_price(train_data_frame: pd.DataFrame,
                                 target: pd.Series) \
         -> List[float]:
     """Train the model on MCA transformed auto data with new car parameters."""
-    price_lst = []
     x_train, x_test = preprocess_transform(train_data_frame,
                                            test_data_frame,
                                            transform=('mca', )
                                            )
     y_train = target
     trained_models = train_model(x_train, y_train,
-                                 config.MODEL)
-
+                                 config.TYPEMODEL)
     result_info = inference_model(x_test, trained_models)
 
     return result_info
@@ -40,7 +38,7 @@ def train_model(x_train: pd.DataFrame,
     trained_models = {}
 
     for name, model in models.items():
-        model.fit(x_train, y_train)
+        model = model().fit(x_train, y_train)
         trained_models[name] = model
 
     logging.info("Train the price prediction model on auto dataset"
@@ -76,20 +74,20 @@ def evaluate_model(x_val: pd.DataFrame,
     return result
 
 
-def inference_model(x_val: pd.DataFrame,
+def inference_model(test_val: pd.DataFrame,
                     trained_models: Dict[str, Any]) \
         -> Dict[str, List[str | List[float]]]:
     """Evaluate the trained regression model with set-aside evaluation data."""
     model_name, predicts = [], []
 
     for name, trained_model in trained_models.items():
-        predict = trained_model.predict(x_val.values.reshape(-1, 11))
+        predict = trained_model.predict(test_val.values.reshape(-1, 11))
         model_name.append(name)
         predicts.append(predict)
 
     result = {'Model': model_name,
               'Predicts': predicts}
-
+    print(result)
     logging.info("Compute the car price using the trained model"
                  + " successfully.")
 

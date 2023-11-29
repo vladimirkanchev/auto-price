@@ -15,7 +15,7 @@ def log_price_info(test_data_frame: pd.DataFrame, price_info: Dict[str, Any]) \
         -> None:
     """ Log model type and corresponding predicted car prices"""
     model_lst = price_info['Model']
-    price_lst = price_info['Predicts'][0][0]
+    price_lst = price_info['Predicts']
 
     logging.info("Current test car data frame and parameters:")
     logging.info("\n {}".format(test_data_frame.to_string()))
