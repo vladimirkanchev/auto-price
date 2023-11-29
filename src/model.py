@@ -16,8 +16,9 @@ from preprocess import preprocess_transform
 def train_and_predict_car_price(train_data_frame: pd.DataFrame,
                                 test_data_frame: pd.DataFrame,
                                 target: pd.Series) \
-        -> float:
+        -> List[float]:
     """Train the model on MCA transformed auto data with new car parameters."""
+    price_lst = []
     x_train, x_test = preprocess_transform(train_data_frame,
                                            test_data_frame,
                                            transform=('mca', )
@@ -27,9 +28,11 @@ def train_and_predict_car_price(train_data_frame: pd.DataFrame,
                                  config.MODEL)
 
     result = inference_model(x_test, trained_models)
-    price = np.round(result['Predicts'][0][0][0], 2)
-
-    return price
+    for name, trained_model in trained_models:
+        price = np.round(result['Predicts'][0][0][0], 2)
+        price_lst.append(price)
+    
+    return price_lst
 
 
 def train_model(x_train: pd.DataFrame,
