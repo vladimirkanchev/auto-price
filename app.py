@@ -1,11 +1,10 @@
 """An entrypoint file for price car prediction."""
-import sys
-from typing import Dict, Tuple
+from typing import Any, Dict, Tuple
 
 import pandas as pd
 import streamlit as st
 
-sys.path.append("src")
+#sys.path.append("src")
 import config
 from logger import logging
 from model import train_and_predict_car_price
@@ -47,13 +46,21 @@ def enter_car_parameters(cat_uniq_dict: Dict[str, Tuple[str]]) \
     return test_data_frame
 
 
-def output_price(price: float) \
+def output_price(price_info: Dict[str, Any]) \
         -> None:
     """Output prince on App."""
     submit = st.button("Compute", type="primary")
+    model_lst = price_info['Model']
+    price_lst = price_info['Predicts']
 
     if submit:
-        st.write('Market car price is: ' + str(price) + ' dollars')
+        for model, price in zip(model_lst, price_lst):
+            if hasattr(price[0], "__len__"):
+                car_price = round(price[0][0], 2)
+            else:
+                car_price = round(price[0], 2)
+                st.write('Market car price is: ' + str(car_price) +
+                         ' dollars - ' + model)
 
 
 def run() \
@@ -63,10 +70,10 @@ def run() \
 
     test_data_frame = enter_car_parameters(cat_uniq_dict)
 
-    price = train_and_predict_car_price(train_data_frame,
-                                        test_data_frame,
-                                        target)
-    output_price(price)
+    price_info = train_and_predict_car_price(train_data_frame,
+                                             test_data_frame,
+                                             target)
+    output_price(price_info)
 
 
 if __name__ == "__main__":
