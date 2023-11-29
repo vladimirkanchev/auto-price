@@ -27,12 +27,9 @@ def train_and_predict_car_price(train_data_frame: pd.DataFrame,
     trained_models = train_model(x_train, y_train,
                                  config.MODEL)
 
-    result = inference_model(x_test, trained_models)
-    for name, trained_model in trained_models:
-        price = np.round(result['Predicts'][0][0][0], 2)
-        price_lst.append(price)
-    
-    return price_lst
+    result_info = inference_model(x_test, trained_models)
+
+    return result_info
 
 
 def train_model(x_train: pd.DataFrame,
