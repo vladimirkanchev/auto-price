@@ -38,7 +38,7 @@ def train_model(x_train: pd.DataFrame,
     trained_models = {}
 
     for name, model in models.items():
-        model = model().fit(x_train, y_train)
+        model = model().fit(x_train, y_train.values.ravel())
         trained_models[name] = model
 
     logging.info("Train the price prediction model on auto dataset"
@@ -87,7 +87,7 @@ def inference_model(test_val: pd.DataFrame,
 
     result = {'Model': model_name,
               'Predicts': predicts}
-    print(result)
+
     logging.info("Compute the car price using the trained model"
                  + " successfully.")
 
