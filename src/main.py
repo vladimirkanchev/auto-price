@@ -4,6 +4,7 @@ import logging
 import data_setup as ds
 import preprocess as pp
 import model
+import utils
 
 
 def main():
@@ -14,12 +15,10 @@ def main():
 
     test_data_frame = ds.random_generate_test_car(cat_uniq_dict)
 
-    price = model.train_and_predict_car_price(train_data_frame,
-                                              test_data_frame,
-                                              target)
-    logging.info("Current test data frame:")
-    logging.info(test_data_frame)
-    logging.info("Predicted car price: {%f}", price)
+    price_info = model.train_and_predict_car_price(train_data_frame,
+                                                  test_data_frame,
+                                                  target)
+    utils.log_price_info(test_data_frame, price_info)
 
 
 if __name__ == "__main__":

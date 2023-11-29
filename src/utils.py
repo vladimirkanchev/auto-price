@@ -11,6 +11,20 @@ import config
 from exception import CustomException
 
 
+def log_price_info(test_data_frame: pd.DataFrame, price_info: Dict[str, Any]) \
+        -> None:
+    """ Log model type and corresponding predicted car prices"""
+    model_lst = price_info['Model']
+    price_lst = price_info['Predicts'][0][0]
+
+    logging.info("Current test car data frame and parameters:")
+    logging.info("\n {}".format(test_data_frame.to_string()))
+
+    for model, price in zip(model_lst, price_lst):
+        logging.info("Model type: %s", model)
+        logging.info("Predicted car price: %f", price)
+
+
 def replace_missing(data_frame: pd.DataFrame) \
         -> pd.DataFrame:
     """Replace missed values from the loaded file with 'NA'."""
