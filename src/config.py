@@ -61,7 +61,3 @@ ATTRIBUTE = {
     "symb": ("symboling",),
     "target": ("price",)
 }
-
-MODEL = {
-    'linearregression': LinearRegression()
-}

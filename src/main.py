@@ -16,8 +16,9 @@ def main():
     test_data_frame = ds.random_generate_test_car(cat_uniq_dict)
 
     price_info = model.train_and_predict_car_price(train_data_frame,
-                                                  test_data_frame,
-                                                  target)
+                                                   test_data_frame,
+                                                   target)
+    print(price_info)
     utils.log_price_info(test_data_frame, price_info)
 
 
