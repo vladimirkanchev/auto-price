@@ -1,0 +1,5 @@
+outs:
+- md5: 3a5b15643c81c4965ce960a1620bc40b
+  size: 25070
+  hash: md5
+  path: Automobile_data.csv
